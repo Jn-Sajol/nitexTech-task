@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Faq = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
   const faqItems = [
     {
       question: 'What is your company all about?',
@@ -17,6 +19,14 @@ const Faq = () => {
     // You can add more FAQ items here
   ];
 
+  const toggleAnswer = (index) => {
+    if (openIndex === index) {
+      setOpenIndex(null); // Close the answer if it's already open
+    } else {
+      setOpenIndex(index); // Open the answer
+    }
+  };
+
   return (
     <section id="Faq" className="py-10">
       <div className="px-4 max-w-screen-xl mx-auto my-8">
@@ -26,10 +36,12 @@ const Faq = () => {
             <div
               key={index}
               className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+              onClick={() => toggleAnswer(index)}
+              style={{ cursor: 'pointer' }}
             >
               <div className="p-4">
                 <h3 className="text-xl md:text-2xl font-semibold mb-2">{item.question}</h3>
-                <p className="text-gray-600">{item.answer}</p>
+                {openIndex === index && <p className="text-gray-600">{item.answer}</p>}
               </div>
             </div>
           ))}
